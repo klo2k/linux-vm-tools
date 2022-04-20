@@ -94,6 +94,16 @@ ResultInactive=no
 ResultActive=yes
 EOF
 
+# Fix "Authentication required to refresh system repositories" pop-up
+cat > /etc/polkit-1/localauthority/50-local.d/46-allow-update-repo.pkla <<EOF
+[Allow Repo Update sudo Users]
+Identity=unix-group:sudo
+Action=org.freedesktop.packagekit.system-sources-refresh
+ResultAny=no
+ResultInactive=no
+ResultActive=yes
+EOF
+
 # reconfigure the service
 systemctl daemon-reload
 systemctl start xrdp
