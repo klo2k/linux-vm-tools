@@ -108,7 +108,7 @@ EOF
 cat > /etc/polkit-1/localauthority/50-local.d/46-allow-flatpak-update.pkla <<EOF
 [Allow Flatpak update sudo Users]
 Identity=unix-group:sudo
-Action=org.freedesktop.Flatpak.appstream-update
+Action=org.freedesktop.Flatpak.appstream-update;org.freedesktop.Flatpak.app-update;org.freedesktop.Flatpak.modify-repo
 ResultAny=no
 ResultInactive=no
 ResultActive=yes
