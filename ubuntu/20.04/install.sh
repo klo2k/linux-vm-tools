@@ -94,6 +94,26 @@ ResultInactive=no
 ResultActive=yes
 EOF
 
+# Fix "Authentication required to refresh system repositories" pop-up
+cat > /etc/polkit-1/localauthority/50-local.d/46-allow-update-repo.pkla <<EOF
+[Allow Repo Update sudo Users]
+Identity=unix-group:sudo
+Action=org.freedesktop.packagekit.system-sources-refresh
+ResultAny=no
+ResultInactive=no
+ResultActive=yes
+EOF
+
+# Fix flatpak update prompt "Authentication required to update information about software"
+cat > /etc/polkit-1/localauthority/50-local.d/46-allow-flatpak-update.pkla <<EOF
+[Allow Flatpak update sudo Users]
+Identity=unix-group:sudo
+Action=org.freedesktop.Flatpak.appstream-update;org.freedesktop.Flatpak.app-update;org.freedesktop.Flatpak.modify-repo
+ResultAny=no
+ResultInactive=no
+ResultActive=yes
+EOF
+
 # reconfigure the service
 systemctl daemon-reload
 systemctl start xrdp
